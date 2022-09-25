@@ -134,42 +134,33 @@ describe 'Merchant Bulk Discounts Index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
 
-    @bulk_item1 = @merchant1.bulk_discounts.create!(percent: 5, threshold: 10)
-    @bulk_item2 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 15)
-    @bulk_item3 = @merchant1.bulk_discounts.create!(percent: 15, threshold: 20)
-    @bulk_item4 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 25)
-    @bulk_item5 = @merchant1.bulk_discounts.create!(percent: 25, threshold: 30)
-
-    visit "/merchant/#{@merchant1.id}/bulk_discounts"
+    @bulk_discount_1 = @merchant1.bulk_discounts.create!(percentage_discount: 15, quantity_threshold: 3)
+    @bulk_discount_2 = @merchant1.bulk_discounts.create!(percentage_discount: 25, quantity_threshold: 5)
+    @bulk_discount_3 = @merchant1.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 10)
   end 
 
   it "can see bulk discounts with percentage and quantity threshold" do 
-    within "#discount-#{@bulk_item1.id}" do 
-      expect(page).to have_content("#{@bulk_item1.percent} percent off of #{@bulk_item1.threshold} or more items")
+    visit "/merchant/#{@merchant1.id}/bulk_discounts"
+
+    within "#discount-#{@bulk_discount_1.id}" do 
+      expect(page).to have_content("#{@bulk_discount_1.percentage_discount}% off of #{@bulk_discount_1.quantity_threshold} or more items!")
     end 
 
-    within "#discount-#{@bulk_item2.id}" do 
-      expect(page).to have_content("#{@bulk_item2.percent} percent off of #{@bulk_item2.threshold} or more items")
+    within "#discount-#{@bulk_discount_2.id}" do 
+      expect(page).to have_content("#{@bulk_discount_2.percentage_discount}% off of #{@bulk_discount_2.quantity_threshold} or more items!")
     end 
 
-    within "#discount-#{@bulk_item3.id}" do 
-      expect(page).to have_content("#{@bulk_item3.percent} percent off of #{@bulk_item3.threshold} or more items")
-    end 
-
-    within "#discount-#{@bulk_item4.id}" do 
-      expect(page).to have_content("#{@bulk_item4.percent} percent off of #{@bulk_item4.threshold} or more items")
-    end 
-
-    within "#discount-#{@bulk_item5.id}" do 
-      expect(page).to have_content("#{@bulk_item5.percent} percent off of #{@bulk_item5.threshold} or more items")
+    within "#discount-#{@bulk_discount_3.id}" do 
+      expect(page).to have_content("#{@bulk_discount_3.percentage_discount}% off of #{@bulk_discount_3.quantity_threshold} or more items!")
     end 
   end 
 
   it "has a link to the bulk discount show page" do 
-    within "#discount-#{@bulk_item1.id}" do
-      expect(page).to have_link(@bulk_item1.percent)
-      click_link(@bulk_item1.percent)
-      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_item1.id}")
+    visit "/merchant/#{@merchant1.id}/bulk_discounts"
+    within "#discount-#{@bulk_discount_1.id}" do
+      expect(page).to have_link(@bulk_discount_1.percentage_discount)
+      click_link(@bulk_discount_1.percentage_discount)
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount_1.id}")
     end
   end 
 end 
