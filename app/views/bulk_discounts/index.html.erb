@@ -1,7 +1,0 @@
-<h1><%= "Active Discounts for #{@merchant.name}" %></h1>
-
-<% @merchant.bulk_discounts.each do |discount| %>
-  <section id='discount-<%= discount.id %>'>
-    <h3>Claim this offer: <%= link_to "#{discount.percentage_discount}% off of #{discount.quantity_threshold} or more items!", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %> 
-  </section>
-<% end %>
