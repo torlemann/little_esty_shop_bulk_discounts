@@ -50,11 +50,11 @@ RSpec.describe 'Merchant Bulk Discount Show' do
     @bulk_discount_2 = @merchant1.bulk_discounts.create!(percentage_discount: 25, quantity_threshold: 5)
     @bulk_discount_3 = @merchant1.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 10)
   
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
   end
 
   it 'shows the quantity threshold and percentage of the discount' do
-    expect(page).to have_content("Discount: 5%")
-    expect(page).to have_content("Quantity Threshold: 10 or more items")
+    visit merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
+    expect(page).to have_content("Discount: 15%")
+    expect(page).to have_content("Quantity Threshold: 3 or more items")
   end
 end
