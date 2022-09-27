@@ -62,6 +62,6 @@ RSpec.describe 'Merchant Bulk Discount Show' do
     visit merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
     expect(page).to have_link("Edit")
     click_link "Edit"
-    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_item_1))
+    expect(current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
   end 
 end
