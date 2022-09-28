@@ -1,7 +1,12 @@
 <h1>Offer <%= @discount.id %></h1>
-
+<% flash.each do |type, msg| %>
+  <br>
+  <div class='flash_green'>
+    <%= msg %>
+  </div>
+<% end %>
 <p>Discount: <%= @discount.percentage_discount %>%</p>
 <p>Quantity Threshold: <%= @discount.quantity_threshold %> or more items</p>
 <%= link_to "Edit", edit_merchant_bulk_discount_path(@merchant, @discount) %>
-<%# <% binding.pry %> %>
-<%# <%= link_to "Edit", "/merchant/#{@merchant.id}/bulk_discounts/#{@bulk_discount.id}/edit" %> %>
+<%# <% binding.pry %>
+<%# <%= link_to "Edit", "/merchant/#{@merchant.id}/bulk_discounts/#{@bulk_discount.id}/edit" %>

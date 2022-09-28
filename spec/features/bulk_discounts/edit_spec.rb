@@ -21,5 +21,14 @@ RSpec.describe 'Merchant Bulk Discount Show' do
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
     expect(page).to have_content("Discount: 50%")
     expect(page).to have_content("Quantity Threshold: 2 or more items")
+    expect(page).to have_content('Update successful')
+  end
+
+  it 'redirects to the edit form if fields are left blank' do
+    fill_in :percentage_discount, with: ""
+    click_button "Submit"
+
+    expect(current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
+    expect(page).to have_content('Error: all fields must be filled in with integer')
   end
 end

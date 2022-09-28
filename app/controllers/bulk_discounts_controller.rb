@@ -26,7 +26,13 @@ class BulkDiscountsController < ApplicationController
       @merchant = Merchant.find(params[:merchant_id])
       @bulk_discount = BulkDiscount.find(params[:id])  
       @bulk_discount.update(discount_params)
-      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)  
+      if params[:status]
+        redirect_to merchant_bulk_discounts_path(@merchant)
+      elsif (params[:percentage_discount].blank? || params[:quantity_threshold].blank?)
+        redirect_to edit_merchant_bulk_discount_path(@merchant, @bulk_discount), alert: "Error: all fields must be filled in with integer"
+      else
+        redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount), notice: "Update successful"
+      end
     end
 
     def destroy
