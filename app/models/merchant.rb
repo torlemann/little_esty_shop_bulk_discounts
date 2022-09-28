@@ -54,4 +54,12 @@ class Merchant < ApplicationRecord
             .order("revenue desc", "invoices.created_at desc")
             .first&.created_at&.to_date
   end
+
+  # def discounts_to_use(item_quantity)
+  #   bulk_discount.where("#{item-quantity} >= quantity_threshold")
+  # end 
+
+  # def best_discount(item_quantity)
+  #   discounts_to_use(item_quantity).maximum(:percentage_discount)
+  # end 
 end
